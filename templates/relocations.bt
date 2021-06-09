@@ -1,0 +1,35 @@
+//------------------------------------------------
+//--- 010 Editor v11.0.1 Binary Template
+//
+//      File: relocations.bt
+//   Authors: TheIndra
+// File Mask: *.gnc
+//------------------------------------------------
+
+// taken from tr7.pdb
+
+struct SectionInfo
+{
+    uint32 magic;
+    int32 size;
+    byte type;
+    byte pad;
+    uint16 versionID;
+    struct {
+        uint32 hasDebugInfo : 1;
+        uint32 resourceType : 7;
+        uint32 numRelocations : 24;        
+    } packedData;
+    uint32 id;
+    uint32 specMask;
+} section <fgcolor=cGreen>;
+
+struct Relocation
+{
+    struct {
+        uint16 type : 3;
+        uint16 sectionIndexOrType : 13;
+    } typeAndSectionInfo;
+    int16 typeSpecific;
+    uint32 offset <fgcolor=cRed>;
+} relocation[section.packedData.numRelocations] <fgcolor=cRed>;
