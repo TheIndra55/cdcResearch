@@ -42,16 +42,16 @@ struct Relocation
     uint32 offset <fgcolor=cRed>;
 } relocation[section.packedData.numRelocations] <fgcolor=cRed>;
 
-// save the position since the section data starts here and this is the base for every offset
 local int levelStart = FTell();
+Printf("%d", levelStart);
 
 // taken from TR7.pdb
 struct Level {
   uint32 terrain;
   float waterZLevel;
-  char backColorR;
-  char backColorG;
-  char backColorB;
+  byte backColorR;
+  byte backColorG;
+  byte backColorB;
   char cpad1;
   char spectralColorR;
   char spectralColorG;
@@ -102,6 +102,19 @@ struct Level {
   unsigned int guiID;
   uint32 dynamicMusicName;
   int streamUnitID;
+  uint32 textureLoadList;
+  uint32 planData;
+  unsigned int mapRegion;
+  int32 WeatherHeightmapData;
+  uint32 attackWaveList;
+  uint32 attackWaveGroupList;
+  uint32 combatDoorsList;
+  int numTerrainLights;
+  uint32 terrainLights;
+  uint32 terrainLightGrids;
+  uint32 vmarkerList;
+  uint32 pmarkerList;
+  uint32 playerName;
 } level <fgcolor=cBlue>;
 
 // skip to intro list
@@ -114,7 +127,7 @@ struct Intro
 	cdcVector dummy1;
 	cdcVector dummy2;
 	cdcVector scale;
-	uint16 objectID; // this is the id of the object, see default\trae\pc-w\objectlist.txt for all objects and their id
+	int16 objectID; // this is the id of the object, see default\trae\pc-w\objectlist.txt for all objects and their id
 	uint16 intronum;
 	uint32 UniqueID; // this is the unique intro id
 	float maxRad;
@@ -131,3 +144,76 @@ FSeek(levelStart + level.objectNameList);
 
 while ( ReadShort( FTell() ) != 0 )
     uint16 objectNameList <fgcolor=0xffa500>;
+
+// MarkUp
+FSeek(levelStart + level.markupList);
+
+struct MarkUp
+{
+    int OverrideMovementCamera;
+    int DTPCameraDataID;
+    int DTPMarkupDataID;
+    uint flags;
+    int16 introID;
+    int16 markupID;
+    float pos[3];
+    int16 bbox[6];
+    uint32 polyLine; // offset - needs relocation
+} markups[level.numMarkUps] <fgcolor=cGreen>;
+
+// display every markup polyline
+local int i;
+for(i = 0; i < level.numMarkUps; i++)
+{
+    if(markups[i].polyLine != 0)
+    {
+        FSeek(levelStart + markups[i].polyLine); 
+    
+        struct PolyLine
+        {
+          int numPoints;
+          cdcVector point[numPoints];
+        } polyline <fgcolor=cBlue>;
+    }
+}
+
+FSeek(levelStart + level.playerName);
+
+string playerName <fgcolor=cGreen>;
+
+FSeek(levelStart + level.worldName);
+
+string worldName <fgcolor=cGreen>;
+
+// Seek to WaterVolumeIntroData of intro 5
+FSeek(levelStart + intros[5].data);
+
+struct IntroData
+{
+  int type;
+} introData;
+
+struct WaterVolumeIntroData
+{
+    float InViewRemoveDist;
+    float OutOfViewRemoveDist;
+    char UseModel;
+    char pad0;
+    unsigned int16 pad1;
+    unsigned int16 Flags;
+    int16 AttachedInstance;
+    float SwingLength;
+    int DTPCameraID;
+    
+    // WaterVolumeIntroData
+    float waterDepth;
+    int16 waterInflow;
+    int16 waterOutflow;
+    float waterSpeed;
+    float flowRadius;
+    int16 bobHeight;
+    int16 bobFrequency;
+    float bobGridSize;
+    int16 priority;
+    unsigned int16 waterFlags;
+} waterintro;
