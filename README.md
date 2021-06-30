@@ -1,3 +1,3 @@
 # TRAE-Research
 
-Various research about Tomb Raider: Anniversary and cdcEngine
+My research and notes about Tomb Raider: Anniversary, Legend and CDC Engine. Might or might not be useful to others.
