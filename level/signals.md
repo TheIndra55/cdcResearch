@@ -7,7 +7,7 @@ Signals are mesh faces which trigger things when the player collides with them, 
 
 ## Mesh
 
-The collision mesh for the signals is at `terrain->signalTerrainGroup->mesh`, this is the same as the collision mesh except a little difference in the `IndexedFace` structure where the last 2 flags are now a 16-bit unsigned integer which is the index of the signal.
+The mesh for the signals is at `terrain->signalTerrainGroup->mesh`, this is the same as the collision mesh except a little difference in the `IndexedFace` structure where the last 2 flags are now a 16-bit unsigned integer which is the index of the signal.
 
 ```cpp
 struct SignalFace

@@ -11,3 +11,7 @@ struct Level {
 ```
 
 **Note** If you change or add new intros make sure to modify the objectNameList too else they won’t load.
+
+## Markers
+
+Intros are also used as markers, a marker will have `objectID` -6 and won't birth an instance.
