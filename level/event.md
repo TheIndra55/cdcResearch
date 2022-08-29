@@ -25,7 +25,7 @@ On most platforms the files where the event code is stored in expose several exp
 
 This is the function which is exposed to the game, the game will call this function every loop which will then call all events. The call structure is usually like this:
 
-![]eventgraph.png)
+![](../images/eventgraph.png)
 
 The prototype of EventMain is
 ```cpp

@@ -62,3 +62,4 @@ Whereas normal sections are just returned, other section types will be processed
 | 5 | Texture |
 | 6 | Wave |
 | 7 | DTPData |
+| 9 | Shader |
