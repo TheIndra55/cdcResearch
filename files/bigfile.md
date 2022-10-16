@@ -4,7 +4,7 @@ Bigfiles are archive files used in cdcEngine games to compose multiple files tog
 
 :::note
 
-The following documentation is about the Bigfile format, not to be confused with the Tiger Archives used since Tomb Raider 2013.
+The following documentation is about the Bigfile format, not to be confused with the [Tiger Archives](tiger.md) used since Tomb Raider 2013.
 
 :::
 
@@ -17,7 +17,7 @@ The first games use a custom hash function with the file extension omitted, Defi
 ## Specialisation
 
 Tomb Raider Legend introduced a new system called specialisation, this allowed storing multiple files with different specialisation masks while keeping the same filename.
-This can be used for to localize files or load a different file depending on other settings such as Next Generation Content.
+This can be used to localize files or load a different file depending on other settings such as Next Generation Content.
 
 The game will do a bitwise AND to match the file with matching specialisation mask.
 
@@ -54,7 +54,7 @@ struct BigFileEntry
     uint32_t fileLen;
     uint32_t filePos;
     uint32_t compressedLen;
-};
+}
 
 struct BigFile
 {
